@@ -1,0 +1,18 @@
+project: savantenvs/sdl_ttf
+target: fuzz_ttf_render
+
+cmds:
+  - cmd: /mayhem/fuzz_ttf_render
+    libfuzzer: true
+    timeout: 30
+
+# $MAYHEM_PROJECT expands to the literal configured project ("savantenvs/sdl_ttf", with the
+# underscore) but the actual test-suite storage is keyed on Mayhem's normalized slug
+# ("savantenvs/sdl-ttf", dashes) — the mismatch makes run-creation fail with "You do not have
+# access to use a test suite from the project sdl_ttf" (confirmed both by a live deploy attempt
+# here and by the legacy mayhemheroes/sdl_ttf integration hitting + documenting the identical
+# bug). Hardcode the pre-normalized slug instead of $MAYHEM_PROJECT below; $MAYHEM_TARGET stays
+# the literal token (required by verify-repo's server-tar check).
+testsuite:
+  - https://$MAYHEM_DOMAIN/savantenvs/sdl-ttf/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/fuzz_ttf_render/testsuite
