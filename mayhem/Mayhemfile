@@ -1,0 +1,10 @@
+project: savantenvs/sdl_ttf
+target: sdl-ttf-fuzzer-buggy-mhh-run-26
+
+cmds:
+  - cmd: /mayhem/fuzz_open_font_from_mem
+    libfuzzer: true
+
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/sdl-ttf-fuzzer-buggy-mhh-run-26/testsuite
